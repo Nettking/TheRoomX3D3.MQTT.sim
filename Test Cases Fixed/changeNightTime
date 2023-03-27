@@ -1,0 +1,68 @@
+@startuml 
+mainframe sd Luminance tests 
+participant "psm:PSM" as psm 
+participant "pim:PIM" as pim 
+participant "«TestItem»\n energy:EnergyModifier" as energy 
+participant "«Test component»\n Human/Simulation" as sim 
+ 
+hnote across:Build 
+'Starting line with single quote is a comment that will not be rendered 
+
+energy -> psm: add_lightsensor(1)
+energy <-sim : set_temperature(23.0)  
+pim <- energy : set_temperature(23.0) 
+pim-> psm: add_thermometer(1, "thermometer") 
+pim-> psm: add_device(1) 
+note over psm: default temp is 20, turn on
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+sim -> pim: temperature(1, 1, 19.0)
+
+sim -> energy : luminance(1, 10)
+
+note over energy: Day time light off
+pim <- energy : set_temperature(21.0) 
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+
+sim -> pim: temperature(1, 1, 20.0)
+sim -> pim: temperature(1, 1, 21.0)
+
+sim -> energy : luminance(1, 0)
+
+note over energy: Current time now()
+
+sim -> energy : set_night_start(now()-10000)
+
+note over energy: Night time light off
+pim <- energy : set_temperature(15.0) 
+pim -> psm: SwitchOff(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOff(1) 
+
+note over energy: Night time light on
+sim -> energy : luminance(1, 100)
+pim <- energy : set_temperature(23.0) 
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+
+sim -> pim: temperature(1, 1, 18.0)
+
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+
+note over energy: Night time light off again
+sim -> energy : luminance(1, 0)
+pim <- energy : set_temperature(15.0) 
+pim -> psm: SwitchOff(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOff(1) 
+
+note over energy: Back to day time light off
+sim -> energy : set_day_start(now())
+pim <- energy : set_temperature(21.0) 
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+
+ 
+/' This is another type of comment 
+'/ 
+@enduml

@@ -1,0 +1,36 @@
+@startuml 
+mainframe sd Luminance tests 
+participant "«Test component»\n sim:Simulation" as sim 
+participant "psm:PSM" as psm 
+participant "pim:PIM" as pim 
+participant "«TestItem»\n energy:EnergyModifier" as energy 
+participant "«Test component»\n Human" as human 
+ 
+hnote across:Build 
+'Starting line with single quote is a comment that will not be rendered 
+
+energy <-human : set_temperature(1, 1, 23.0)  
+pim <- energy : set_temperature(23.0) 
+pim-> psm: add_thermometer(1, "thermometer") 
+pim-> psm: add_device(1) 
+
+
+sim -> energy : provide_lum_motion(100)
+note over energy: Day time light on
+pim <- energy : set_temperature(23.0) 
+sim -> pim: provide_temp(20.0)
+
+pim -> psm: SwitchOn(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOn(1) 
+
+sim -> pim: provide_temp(22.0)
+sim -> energy : provide_lum_motion(0)
+note over energy: Day time light off
+pim <- energy : set_temperature(21.0) 
+pim -> psm: SwitchOff(1) 
+sim<- psm: «ExpectedResponseAction»\n SwitchOff(1) 
+
+ 
+/' This is another type of comment 
+'/ 
+@enduml

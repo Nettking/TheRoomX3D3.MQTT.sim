@@ -1,0 +1,49 @@
+@startuml
+rectangle X3DE_MQTT_SIM { 
+ rectangle T1:MQTTDriver{ 
+  portin provide_temp 
+  portin provide_luminance
+  portin require_val 
+  portin require_val 
+  portout MQTT 
+ } 
+ rectangle pim:PIM{ 
+  portout get_sensor 
+  'portout get_comfort_temp
+  portout request_sensor 
+  portout request_actuator
+  portout human_input  
+  portout human_output 
+  port guard_temperature 
+  port guard_human 
+ } 
+ rectangle myself:Human{ 
+  port send_cmd
+  port send_temp
+  portin get_values 
+ } 
+
+ rectangle e_saving:EnergySaving{
+  portin get_luminance
+  portin human_input_temp
+  port send_comfort_temp
+ }
+
+ rectangle sim:Simulation{ 
+  port toMQTT 
+ } 
+} 
+ 
+send_cmd --> human_input
+provide_temp --> get_sensor 
+send_temp--> human_input_temp
+send_comfort_temp --> get_sensor 
+ 
+request_sensor --> require_val 
+request_actuator --> require_val 
+human_output ---> get_values 
+ 
+toMQTT <--> MQTT 
+
+provide_luminance --> get_luminance
+@enduml

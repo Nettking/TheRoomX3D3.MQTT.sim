@@ -1,0 +1,112 @@
+/* ThingML Framework */
+
+// Base datatypes
+import "datatypes.thingml" from stl
+import "pim.thingml"
+import "timestuff.thingml"
+
+protocol stdio
+@serializer "JSON"
+
+// A Mock only needs the port definition and a Swing component will be generated
+thing Human includes TemperatureMsg, GeneralMsg, OnOffMsg, LuminanceMsg, TimeStuff, DeviceGeneral, MotionMsg
+//@mock "true"
+{ 	required port send_cmd_temp {
+		sends SwitchOn, SwitchOff, set_temperature, set_delta, fetch_temp
+	}
+	
+	required port send_cmd_lum_mot {
+		sends add_lightsensor,  add_motionsensor
+	}
+	
+	required port send_temp {
+		sends set_temperature
+	}
+	
+	required port send_day_night_time {
+		sends set_day_start, set_night_start
+	}
+	
+	provided port TTYin_temp {
+		receives SwitchOn, SwitchOff, set_temperature, set_delta, fetch_temp
+	}
+	
+	provided port TTYin_lum_mot {
+		receives add_lightsensor, add_motionsensor
+	}
+	
+	required port get_values {
+		sends temperature, luminance, motion, nomotion, prompt
+	}
+	
+	provided port TTYout{
+		receives temperature, luminance, motion, nomotion, prompt
+	}
+	
+	statechart HumanBehavior init Idle {
+	state Idle {
+			transition -> Idle
+			event am:TTYin_lum_mot?add_motionsensor
+			action send_cmd_lum_mot!add_motionsensor(am.id)
+			
+			transition -> Idle
+			event al:TTYin_lum_mot?add_lightsensor
+			action send_cmd_lum_mot!add_lightsensor(al.id)
+			
+			transition -> Idle
+			event son:TTYin_temp?SwitchOn
+			action send_cmd_temp!SwitchOn(son.did)
+			
+			transition -> Idle
+			event sof:TTYin_temp?SwitchOff
+			action send_cmd_temp!SwitchOff(sof.did)
+			
+			transition -> Idle
+			event st:TTYin_temp?set_temperature
+			action send_cmd_temp!set_temperature(st.t)
+			
+			transition -> Idle
+			event sd:TTYin_temp?set_delta
+			action send_cmd_temp!set_delta(sd.dlta)
+			
+			transition -> Idle
+			event st:TTYin_temp?fetch_temp
+			action send_cmd_temp!fetch_temp()
+			
+			transition -> Idle
+			event tp:TTYout?temperature
+			action do
+				// println "id:", tp.id, "txt:", tp.txt, "t:", tp.t
+				get_values!temperature(tp.id,tp.txt,tp.t)
+			end
+			
+			transition -> Idle
+			event lu:TTYout?luminance
+			action do
+				//println "id:", lu.id, "t:", lu.lum
+				get_values!luminance(lu.id,lu.lum)
+			end
+			
+			transition -> Idle
+			event mot:TTYout?motion
+			action do
+				/// println "id:", mot.id
+				get_values!motion(mot.id)
+			end
+			
+			transition -> Idle
+			event nomot:TTYout?nomotion
+			action do
+				// println "id:", nomot.id
+				get_values!nomotion(nomot.id)
+			end
+			
+			transition -> Idle
+			event prm:TTYout?prompt
+			action do
+				println prm.txt
+				// get_values!prompt(prm.txt)
+			end
+		}
+	}
+}

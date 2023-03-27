@@ -1,0 +1,199 @@
+import "pim_messages.thingml"
+import "timestuff.thingml"
+import "timer.thingml"
+
+thing EnergySaving includes LuminanceMsg, TemperatureMsg, TimeStuff, TimerMsgs{
+    provided port get_luminance { receives luminance}
+    provided port human_input_temp { receives set_temperature}
+    provided port get_day_night_time { receives set_day_start, set_night_start}
+    
+    required port send_comfort_temp { sends set_temperature }
+    
+    required port energy_timer {
+		receives timer_timeout
+		sends timer_start, timer_cancel
+	}
+	required port request_luminance_sensor {
+		sends add_lightsensor
+	}
+
+    // Internal state variables
+    property current_comfort_temp: Double = 20.6
+    property current_luminance: Double = 0
+    property light_threshold: Double = 20
+    property light_off_temp_fall: Double = 2
+    property night_temp_fall: Double = 8
+
+    // Internal state machine
+    statechart EnergySaving init Normal{
+			on entry do 
+                request_luminance_sensor!add_lightsensor(1)
+            end
+        state Normal {
+        	on entry do
+        		println(" I am in normal state ")
+        		send_comfort_temp!set_temperature(current_comfort_temp)
+        	end
+        	
+            transition -> Normal
+        	event temp_input:human_input_temp?set_temperature
+        	action do
+        		current_comfort_temp = temp_input.t
+        		send_comfort_temp!set_temperature(current_comfort_temp)
+        	end
+        	
+        	
+        	
+            transition -> LightOff
+            event lum_input:get_luminance?luminance
+        	guard lum_input.lum < light_threshold and (Night(Now()) == false) //if day
+        	action do
+        		current_luminance = lum_input.lum
+        		send_comfort_temp!set_temperature(current_comfort_temp - light_off_temp_fall)
+        	end
+        	
+        	transition -> Night
+            event lum_input:get_luminance?luminance
+        	guard lum_input.lum < light_threshold and (Night(Now()) == true) //if night
+        	action do
+        		current_luminance = lum_input.lum
+        		send_comfort_temp!set_temperature(current_comfort_temp - night_temp_fall)
+        	end
+        	
+        	transition -> LightOff
+            event night_start_input:get_day_night_time?set_night_start
+        	guard current_luminance < light_threshold and (UpdateNightStart(Now(), night_start_input.time) == false) //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - light_off_temp_fall)
+        	end
+        	
+        	transition -> Night
+            event night_start_input:get_day_night_time?set_night_start
+        	guard current_luminance < light_threshold and (UpdateNightStart(Now(), night_start_input.time) == true) //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - night_temp_fall)
+        	end
+        	
+        	transition -> Normal
+        	event time_input:get_day_night_time?set_day_start
+        	guard current_luminance >= light_threshold
+        	action do
+        		night_end = time_input.time
+        	end
+        	
+        	transition -> Normal
+        	event time_input:get_day_night_time?set_night_start
+        	guard current_luminance >= light_threshold
+        	action do
+        		night_start = time_input.time
+        	end
+        	
+        }
+        
+        state LightOff {
+        	on entry do
+        		println(" I am in LightOff state ")
+        		energy_timer!timer_start(LeftOfDay())
+        	end
+        	
+        	on exit energy_timer!timer_cancel()
+        	
+        	
+        	transition -> Night
+        	event timout:energy_timer?timer_timeout
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - night_temp_fall)
+        	end
+        	
+        	transition -> Normal
+        	event lum_input:get_luminance?luminance
+        	guard lum_input.lum >= light_threshold
+        	action do
+        		current_luminance = lum_input.lum
+        		send_comfort_temp!set_temperature(current_comfort_temp)
+        	end
+        	
+        	transition -> LightOff
+        	event temp_input:human_input_temp?set_temperature
+        	action do
+        		send_comfort_temp!set_temperature(temp_input.t - light_off_temp_fall)
+        	end
+        	
+        	transition -> Night
+            event night_start_input:get_day_night_time?set_night_start
+        	guard (UpdateNightStart(Now(), night_start_input.time) == true) and current_luminance < light_threshold  //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - night_temp_fall)
+        	end
+        	
+        	transition -> Night
+            event night_end_input:get_day_night_time?set_day_start
+        	guard current_luminance < light_threshold and (UpdateNightEnd(Now(), night_end_input.time) == true) //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - light_off_temp_fall)
+        	end
+        	
+        	transition -> LightOff
+        	event night_start_input:get_day_night_time?set_night_start
+        	guard current_luminance < light_threshold and (UpdateNightStart(Now(), night_start_input.time) == false)
+        	
+        	transition -> LightOff
+        	event night_end_input:get_day_night_time?set_day_start
+        	guard current_luminance < light_threshold and (UpdateNightEnd(Now(), night_end_input.time) == false)
+        }
+
+        state Night {
+            on entry do
+        		println(" I am in night state ")
+        		energy_timer!timer_start(LeftOfNight())
+        	end
+        	
+        	on exit energy_timer!timer_cancel()
+        	
+        	transition -> LightOff
+        	event timout:energy_timer?timer_timeout
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp-light_off_temp_fall)
+        	end
+        	
+            transition -> Normal
+        	event lum_input:get_luminance?luminance
+        	guard lum_input.lum >= light_threshold
+        	action do
+        		current_luminance = lum_input.lum
+        		send_comfort_temp!set_temperature(current_comfort_temp)
+        	end
+        	
+        	transition -> Night
+        	event temp_input:human_input_temp?set_temperature
+        	action do
+        		current_comfort_temp = temp_input.t - night_temp_fall
+        		send_comfort_temp!set_temperature(current_comfort_temp)
+        	end
+        	
+        	transition -> LightOff
+            event night_start_input:get_day_night_time?set_night_start
+        	guard current_luminance < light_threshold and (UpdateNightStart(Now(), night_start_input.time) == false) //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - light_off_temp_fall)
+        	end
+        	
+        	transition -> LightOff
+            event night_end_input:get_day_night_time?set_day_start
+        	guard current_luminance < light_threshold and (UpdateNightEnd(Now(), night_end_input.time) == false) //if day
+        	action do
+        		send_comfort_temp!set_temperature(current_comfort_temp - light_off_temp_fall)
+        	end
+        	
+        	transition -> Night
+        	event night_start_input:get_day_night_time?set_night_start
+        	guard current_luminance < light_threshold and (UpdateNightStart(Now(), night_start_input.time) == true)
+        	
+        	transition -> Night
+        	event night_end_input:get_day_night_time?set_day_start
+        	guard current_luminance < light_threshold and (UpdateNightEnd(Now(), night_end_input.time) == true)
+        	
+        }
+
+    }
+}
