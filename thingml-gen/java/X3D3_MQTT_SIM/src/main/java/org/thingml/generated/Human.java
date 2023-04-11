@@ -169,8 +169,8 @@ get_values_port.send(promptType.instantiate(GeneralMsg_prompt_txt_var));
 }
 
 //Attributes
-private long TimeStuff_night_start_var;
 private long TimeStuff_night_end_var;
+private long TimeStuff_night_start_var;
 //Ports
 private Port send_cmd_temp_port;
 private Port send_cmd_lum_mot_port;
@@ -206,19 +206,6 @@ super();
 }
 
 //Getters and Setters for non readonly/final attributes
-public long getTimeStuff_night_start_var() {
-return TimeStuff_night_start_var;
-}
-
-public void setTimeStuff_night_start_var(long TimeStuff_night_start_var) {
-this.TimeStuff_night_start_var = TimeStuff_night_start_var;
-}
-
-public Human initTimeStuff_night_start_var(long TimeStuff_night_start_var) {
-this.TimeStuff_night_start_var = TimeStuff_night_start_var;
-return this;
-}
-
 public long getTimeStuff_night_end_var() {
 return TimeStuff_night_end_var;
 }
@@ -229,6 +216,19 @@ this.TimeStuff_night_end_var = TimeStuff_night_end_var;
 
 public Human initTimeStuff_night_end_var(long TimeStuff_night_end_var) {
 this.TimeStuff_night_end_var = TimeStuff_night_end_var;
+return this;
+}
+
+public long getTimeStuff_night_start_var() {
+return TimeStuff_night_start_var;
+}
+
+public void setTimeStuff_night_start_var(long TimeStuff_night_start_var) {
+this.TimeStuff_night_start_var = TimeStuff_night_start_var;
+}
+
+public Human initTimeStuff_night_start_var(long TimeStuff_night_start_var) {
+this.TimeStuff_night_start_var = TimeStuff_night_start_var;
 return this;
 }
 
@@ -259,109 +259,109 @@ return TTYout_port;
 }
 private CompositeState buildHuman_HumanBehavior(){
 final AtomicState state_Human_HumanBehavior_Idle = new AtomicState("Idle");
-Transition h1442269695 = new Transition();
-h1442269695.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1442269695.event(add_motionsensorType);
-h1442269695.port(TTYin_lum_mot_port);
-h1442269695.action((Event e)->{
+Transition h305184859 = new Transition();
+h305184859.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h305184859.event(add_motionsensorType);
+h305184859.port(TTYin_lum_mot_port);
+h305184859.action((Event e)->{
 final Add_motionsensorMessageType.Add_motionsensorMessage add_motionsensor = (Add_motionsensorMessageType.Add_motionsensorMessage) e;
 sendAdd_motionsensor_via_send_cmd_lum_mot((int) (add_motionsensor.id));
 });
 
-Transition h1570460349 = new Transition();
-h1570460349.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1570460349.event(add_lightsensorType);
-h1570460349.port(TTYin_lum_mot_port);
-h1570460349.action((Event e)->{
+Transition h1423781066 = new Transition();
+h1423781066.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1423781066.event(add_lightsensorType);
+h1423781066.port(TTYin_lum_mot_port);
+h1423781066.action((Event e)->{
 final Add_lightsensorMessageType.Add_lightsensorMessage add_lightsensor = (Add_lightsensorMessageType.Add_lightsensorMessage) e;
 sendAdd_lightsensor_via_send_cmd_lum_mot((int) (add_lightsensor.id));
 });
 
-Transition h1625516191 = new Transition();
-h1625516191.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1625516191.event(SwitchOnType);
-h1625516191.port(TTYin_temp_port);
-h1625516191.action((Event e)->{
+Transition h1920884542 = new Transition();
+h1920884542.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1920884542.event(SwitchOnType);
+h1920884542.port(TTYin_temp_port);
+h1920884542.action((Event e)->{
 final SwitchOnMessageType.SwitchOnMessage SwitchOn = (SwitchOnMessageType.SwitchOnMessage) e;
 sendSwitchOn_via_send_cmd_temp((int) (SwitchOn.did));
 });
 
-Transition h984121811 = new Transition();
-h984121811.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h984121811.event(SwitchOffType);
-h984121811.port(TTYin_temp_port);
-h984121811.action((Event e)->{
+Transition h1303604821 = new Transition();
+h1303604821.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1303604821.event(SwitchOffType);
+h1303604821.port(TTYin_temp_port);
+h1303604821.action((Event e)->{
 final SwitchOffMessageType.SwitchOffMessage SwitchOff = (SwitchOffMessageType.SwitchOffMessage) e;
 sendSwitchOff_via_send_cmd_temp((int) (SwitchOff.did));
 });
 
-Transition h2031514018 = new Transition();
-h2031514018.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h2031514018.event(set_temperatureType);
-h2031514018.port(TTYin_temp_port);
-h2031514018.action((Event e)->{
+Transition h1592961027 = new Transition();
+h1592961027.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1592961027.event(set_temperatureType);
+h1592961027.port(TTYin_temp_port);
+h1592961027.action((Event e)->{
 final Set_temperatureMessageType.Set_temperatureMessage set_temperature = (Set_temperatureMessageType.Set_temperatureMessage) e;
 sendSet_temperature_via_send_cmd_temp((double) (set_temperature.t));
 });
 
-Transition h1635492010 = new Transition();
-h1635492010.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1635492010.event(set_deltaType);
-h1635492010.port(TTYin_temp_port);
-h1635492010.action((Event e)->{
+Transition h1055089006 = new Transition();
+h1055089006.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1055089006.event(set_deltaType);
+h1055089006.port(TTYin_temp_port);
+h1055089006.action((Event e)->{
 final Set_deltaMessageType.Set_deltaMessage set_delta = (Set_deltaMessageType.Set_deltaMessage) e;
 sendSet_delta_via_send_cmd_temp((double) (set_delta.dlta));
 });
 
-Transition h1267461374 = new Transition();
-h1267461374.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1267461374.event(fetch_tempType);
-h1267461374.port(TTYin_temp_port);
-h1267461374.action((Event e)->{
+Transition h1043605647 = new Transition();
+h1043605647.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1043605647.event(fetch_tempType);
+h1043605647.port(TTYin_temp_port);
+h1043605647.action((Event e)->{
 sendFetch_temp_via_send_cmd_temp();
 });
 
-Transition h301554730 = new Transition();
-h301554730.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h301554730.event(temperatureType);
-h301554730.port(TTYout_port);
-h301554730.action((Event e)->{
+Transition h443894172 = new Transition();
+h443894172.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h443894172.event(temperatureType);
+h443894172.port(TTYout_port);
+h443894172.action((Event e)->{
 final TemperatureMessageType.TemperatureMessage temperature = (TemperatureMessageType.TemperatureMessage) e;
 sendTemperature_via_get_values((int) (temperature.id), (String) (temperature.txt), (double) (temperature.t));
 });
 
-Transition h1633466352 = new Transition();
-h1633466352.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1633466352.event(luminanceType);
-h1633466352.port(TTYout_port);
-h1633466352.action((Event e)->{
+Transition h680062071 = new Transition();
+h680062071.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h680062071.event(luminanceType);
+h680062071.port(TTYout_port);
+h680062071.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 sendLuminance_via_get_values((int) (luminance.id), (double) (luminance.lum));
 });
 
-Transition h365771326 = new Transition();
-h365771326.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h365771326.event(motionType);
-h365771326.port(TTYout_port);
-h365771326.action((Event e)->{
+Transition h90183957 = new Transition();
+h90183957.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h90183957.event(motionType);
+h90183957.port(TTYout_port);
+h90183957.action((Event e)->{
 final MotionMessageType.MotionMessage motion = (MotionMessageType.MotionMessage) e;
 sendMotion_via_get_values((int) (motion.id));
 });
 
-Transition h1806045085 = new Transition();
-h1806045085.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h1806045085.event(nomotionType);
-h1806045085.port(TTYout_port);
-h1806045085.action((Event e)->{
+Transition h1073039781 = new Transition();
+h1073039781.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h1073039781.event(nomotionType);
+h1073039781.port(TTYout_port);
+h1073039781.action((Event e)->{
 final NomotionMessageType.NomotionMessage nomotion = (NomotionMessageType.NomotionMessage) e;
 sendNomotion_via_get_values((int) (nomotion.id));
 });
 
-Transition h98946879 = new Transition();
-h98946879.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
-h98946879.event(promptType);
-h98946879.port(TTYout_port);
-h98946879.action((Event e)->{
+Transition h135818146 = new Transition();
+h135818146.from(state_Human_HumanBehavior_Idle).to(state_Human_HumanBehavior_Idle);
+h135818146.event(promptType);
+h135818146.port(TTYout_port);
+h135818146.action((Event e)->{
 final PromptMessageType.PromptMessage prompt = (PromptMessageType.PromptMessage) e;
 System.out.println(""+(prompt.txt));
 });
