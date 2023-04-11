@@ -46,18 +46,11 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 	property delta:Double = 0.10 // the maximum allowed difference from the comfort temperature
 	
 	property current_temp:Double = 0 // the last temperature recorded, buffering one measurement
-	property last_temp_1:Double = 0
-	property last_temp_2:Double = 0
-	property last_temp_3:Double = 0
-	property last_temp_4:Double = 0
-	property last_temp_5:Double = 0
 	property current_average_diff:Double = 0
 	property warming_time:Double = 10
 	property cooling_time:Double = 10
-	property buffer_size:Integer = 15
-	property i:Integer
-	property temp_buffer:Double[15]
-	property buffer_full:Boolean
+	property buffer_size:Integer = 10
+	property temp_buffer:Double[10]
 	property buffer_rear:Integer = 0
 	property buffer_front:Integer = 0
 	
@@ -117,6 +110,7 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 				//last_temp_3 = last_temp_4
 				//last_temp_4 = last_temp_5
 				//last_temp_5 = current_temp
+				current_temp = temp.t
 				temp_buffer[buffer_rear] = temp.t
 				buffer_rear = (buffer_rear + 1) % buffer_size
 				if(buffer_rear == buffer_front) do
@@ -175,24 +169,32 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 						//last_temp_3 = last_temp_4
 						//last_temp_4 = last_temp_5
 						//last_temp_5 = current_temp
+						if (current_temp>temp.t) request_actuator!SwitchOn(switch_id)
+						current_temp = temp.t
+						
+						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+						println(current_average_diff)
 						temp_buffer[buffer_rear] = temp.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 					end
 					
 					transition -> TemprDecrease
 					event temp2:get_sensor?temperature
 					guard temp2.t+current_average_diff*warming_time>tmrature+delta
 					action do
+						request_actuator!SwitchOff(switch_id)
+						current_temp = temp2.t
+						
+						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+						println(current_average_diff)
 						temp_buffer[buffer_rear] = temp2.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 					end
 					
 					transition -> TemprIncrease
@@ -225,24 +227,32 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 					guard temp.t+current_average_diff*cooling_time>=tmrature+delta
 					action do
 						// TRACING to follow thermostat print("TempDecrease: Observed=") print(temp.t) print(" Desired ") print(tmrature) print("\n") 
+						if (current_temp<temp.t) request_actuator!SwitchOff(switch_id)
+						current_temp = temp.t
+						
+						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+						println(current_average_diff)
 						temp_buffer[buffer_rear] = temp.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 					end
 					
 					transition -> TemprIncrease
 					event temp2:get_sensor?temperature
 					guard temp2.t+current_average_diff*cooling_time<tmrature-delta
 					action do
+						request_actuator!SwitchOn(switch_id)
+						current_temp = temp2.t
+						
+						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+						println(current_average_diff)
 						temp_buffer[buffer_rear] = temp2.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 					end
 					
 					transition -> TemprDecrease
@@ -306,12 +316,13 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 				transition -> On
 				event temp:get_sensor?temperature
 				action do
+					current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+					println(current_average_diff)
 					temp_buffer[buffer_rear] = temp.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 				end
 			}
 			state Off {
@@ -333,12 +344,13 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 				transition -> Off
 				event temp:get_sensor?temperature
 				action do
+					current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
+					println(current_average_diff)
 					temp_buffer[buffer_rear] = temp.t
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
 						end
-						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/buffer_size
 				end
 			}
 			
