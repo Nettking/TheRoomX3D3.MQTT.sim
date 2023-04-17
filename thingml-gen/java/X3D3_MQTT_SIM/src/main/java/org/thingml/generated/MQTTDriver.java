@@ -112,22 +112,22 @@ MQTT_port.send(SwitchOffType.instantiate(OnOffMsg_SwitchOff_did_var));
 }
 
 //Attributes
-private double[] MQTTDriver_lightval_var;
-private int MQTTDriver_id_s_var;
-private int MQTTDriver_did_var;
-private int MQTTDriver_last_onoff_var;
-private boolean MQTTDriver_foundL_var;
 private int[] MQTTDriver_motionsensors_var;
-private boolean MQTTDriver_found_var;
-private int MQTTDriver_last_thermo_var;
 private int MQTTDriver_last_light_var;
-private int[] MQTTDriver_onoffswitches_var;
-private int[] MQTTDriver_lightsensors_var;
-private String[] MQTTDriver_thermotext_var;
-private int MQTTDriver_i_var;
+private double[] MQTTDriver_lightval_var;
+private int MQTTDriver_last_thermo_var;
+private int MQTTDriver_did_var;
 private double[] MQTTDriver_thermoval_var;
-private int[] MQTTDriver_thermometers_var;
+private String[] MQTTDriver_thermotext_var;
 private int MQTTDriver_last_mo_var;
+private int MQTTDriver_id_s_var;
+private int[] MQTTDriver_thermometers_var;
+private int MQTTDriver_last_onoff_var;
+private int[] MQTTDriver_lightsensors_var;
+private int MQTTDriver_i_var;
+private boolean MQTTDriver_found_var;
+private int[] MQTTDriver_onoffswitches_var;
+private boolean MQTTDriver_foundL_var;
 //Ports
 private Port provide_temp_port;
 private Port provide_lum_motion_port;
@@ -159,71 +159,6 @@ super();
 }
 
 //Getters and Setters for non readonly/final attributes
-public double[] getMQTTDriver_lightval_var() {
-return MQTTDriver_lightval_var;
-}
-
-public void setMQTTDriver_lightval_var(double[] MQTTDriver_lightval_var) {
-this.MQTTDriver_lightval_var = MQTTDriver_lightval_var;
-}
-
-public MQTTDriver initMQTTDriver_lightval_var(double[] MQTTDriver_lightval_var) {
-this.MQTTDriver_lightval_var = MQTTDriver_lightval_var;
-return this;
-}
-
-public int getMQTTDriver_id_s_var() {
-return MQTTDriver_id_s_var;
-}
-
-public void setMQTTDriver_id_s_var(int MQTTDriver_id_s_var) {
-this.MQTTDriver_id_s_var = MQTTDriver_id_s_var;
-}
-
-public MQTTDriver initMQTTDriver_id_s_var(int MQTTDriver_id_s_var) {
-this.MQTTDriver_id_s_var = MQTTDriver_id_s_var;
-return this;
-}
-
-public int getMQTTDriver_did_var() {
-return MQTTDriver_did_var;
-}
-
-public void setMQTTDriver_did_var(int MQTTDriver_did_var) {
-this.MQTTDriver_did_var = MQTTDriver_did_var;
-}
-
-public MQTTDriver initMQTTDriver_did_var(int MQTTDriver_did_var) {
-this.MQTTDriver_did_var = MQTTDriver_did_var;
-return this;
-}
-
-public int getMQTTDriver_last_onoff_var() {
-return MQTTDriver_last_onoff_var;
-}
-
-public void setMQTTDriver_last_onoff_var(int MQTTDriver_last_onoff_var) {
-this.MQTTDriver_last_onoff_var = MQTTDriver_last_onoff_var;
-}
-
-public MQTTDriver initMQTTDriver_last_onoff_var(int MQTTDriver_last_onoff_var) {
-this.MQTTDriver_last_onoff_var = MQTTDriver_last_onoff_var;
-return this;
-}
-
-public boolean getMQTTDriver_foundL_var() {
-return MQTTDriver_foundL_var;
-}
-
-public void setMQTTDriver_foundL_var(boolean MQTTDriver_foundL_var) {
-this.MQTTDriver_foundL_var = MQTTDriver_foundL_var;
-}
-
-public MQTTDriver initMQTTDriver_foundL_var(boolean MQTTDriver_foundL_var) {
-this.MQTTDriver_foundL_var = MQTTDriver_foundL_var;
-return this;
-}
-
 public int[] getMQTTDriver_motionsensors_var() {
 return MQTTDriver_motionsensors_var;
 }
@@ -234,32 +169,6 @@ this.MQTTDriver_motionsensors_var = MQTTDriver_motionsensors_var;
 
 public MQTTDriver initMQTTDriver_motionsensors_var(int[] MQTTDriver_motionsensors_var) {
 this.MQTTDriver_motionsensors_var = MQTTDriver_motionsensors_var;
-return this;
-}
-
-public boolean getMQTTDriver_found_var() {
-return MQTTDriver_found_var;
-}
-
-public void setMQTTDriver_found_var(boolean MQTTDriver_found_var) {
-this.MQTTDriver_found_var = MQTTDriver_found_var;
-}
-
-public MQTTDriver initMQTTDriver_found_var(boolean MQTTDriver_found_var) {
-this.MQTTDriver_found_var = MQTTDriver_found_var;
-return this;
-}
-
-public int getMQTTDriver_last_thermo_var() {
-return MQTTDriver_last_thermo_var;
-}
-
-public void setMQTTDriver_last_thermo_var(int MQTTDriver_last_thermo_var) {
-this.MQTTDriver_last_thermo_var = MQTTDriver_last_thermo_var;
-}
-
-public MQTTDriver initMQTTDriver_last_thermo_var(int MQTTDriver_last_thermo_var) {
-this.MQTTDriver_last_thermo_var = MQTTDriver_last_thermo_var;
 return this;
 }
 
@@ -276,55 +185,42 @@ this.MQTTDriver_last_light_var = MQTTDriver_last_light_var;
 return this;
 }
 
-public int[] getMQTTDriver_onoffswitches_var() {
-return MQTTDriver_onoffswitches_var;
+public double[] getMQTTDriver_lightval_var() {
+return MQTTDriver_lightval_var;
 }
 
-public void setMQTTDriver_onoffswitches_var(int[] MQTTDriver_onoffswitches_var) {
-this.MQTTDriver_onoffswitches_var = MQTTDriver_onoffswitches_var;
+public void setMQTTDriver_lightval_var(double[] MQTTDriver_lightval_var) {
+this.MQTTDriver_lightval_var = MQTTDriver_lightval_var;
 }
 
-public MQTTDriver initMQTTDriver_onoffswitches_var(int[] MQTTDriver_onoffswitches_var) {
-this.MQTTDriver_onoffswitches_var = MQTTDriver_onoffswitches_var;
+public MQTTDriver initMQTTDriver_lightval_var(double[] MQTTDriver_lightval_var) {
+this.MQTTDriver_lightval_var = MQTTDriver_lightval_var;
 return this;
 }
 
-public int[] getMQTTDriver_lightsensors_var() {
-return MQTTDriver_lightsensors_var;
+public int getMQTTDriver_last_thermo_var() {
+return MQTTDriver_last_thermo_var;
 }
 
-public void setMQTTDriver_lightsensors_var(int[] MQTTDriver_lightsensors_var) {
-this.MQTTDriver_lightsensors_var = MQTTDriver_lightsensors_var;
+public void setMQTTDriver_last_thermo_var(int MQTTDriver_last_thermo_var) {
+this.MQTTDriver_last_thermo_var = MQTTDriver_last_thermo_var;
 }
 
-public MQTTDriver initMQTTDriver_lightsensors_var(int[] MQTTDriver_lightsensors_var) {
-this.MQTTDriver_lightsensors_var = MQTTDriver_lightsensors_var;
+public MQTTDriver initMQTTDriver_last_thermo_var(int MQTTDriver_last_thermo_var) {
+this.MQTTDriver_last_thermo_var = MQTTDriver_last_thermo_var;
 return this;
 }
 
-public String[] getMQTTDriver_thermotext_var() {
-return MQTTDriver_thermotext_var;
+public int getMQTTDriver_did_var() {
+return MQTTDriver_did_var;
 }
 
-public void setMQTTDriver_thermotext_var(String[] MQTTDriver_thermotext_var) {
-this.MQTTDriver_thermotext_var = MQTTDriver_thermotext_var;
+public void setMQTTDriver_did_var(int MQTTDriver_did_var) {
+this.MQTTDriver_did_var = MQTTDriver_did_var;
 }
 
-public MQTTDriver initMQTTDriver_thermotext_var(String[] MQTTDriver_thermotext_var) {
-this.MQTTDriver_thermotext_var = MQTTDriver_thermotext_var;
-return this;
-}
-
-public int getMQTTDriver_i_var() {
-return MQTTDriver_i_var;
-}
-
-public void setMQTTDriver_i_var(int MQTTDriver_i_var) {
-this.MQTTDriver_i_var = MQTTDriver_i_var;
-}
-
-public MQTTDriver initMQTTDriver_i_var(int MQTTDriver_i_var) {
-this.MQTTDriver_i_var = MQTTDriver_i_var;
+public MQTTDriver initMQTTDriver_did_var(int MQTTDriver_did_var) {
+this.MQTTDriver_did_var = MQTTDriver_did_var;
 return this;
 }
 
@@ -341,16 +237,16 @@ this.MQTTDriver_thermoval_var = MQTTDriver_thermoval_var;
 return this;
 }
 
-public int[] getMQTTDriver_thermometers_var() {
-return MQTTDriver_thermometers_var;
+public String[] getMQTTDriver_thermotext_var() {
+return MQTTDriver_thermotext_var;
 }
 
-public void setMQTTDriver_thermometers_var(int[] MQTTDriver_thermometers_var) {
-this.MQTTDriver_thermometers_var = MQTTDriver_thermometers_var;
+public void setMQTTDriver_thermotext_var(String[] MQTTDriver_thermotext_var) {
+this.MQTTDriver_thermotext_var = MQTTDriver_thermotext_var;
 }
 
-public MQTTDriver initMQTTDriver_thermometers_var(int[] MQTTDriver_thermometers_var) {
-this.MQTTDriver_thermometers_var = MQTTDriver_thermometers_var;
+public MQTTDriver initMQTTDriver_thermotext_var(String[] MQTTDriver_thermotext_var) {
+this.MQTTDriver_thermotext_var = MQTTDriver_thermotext_var;
 return this;
 }
 
@@ -364,6 +260,110 @@ this.MQTTDriver_last_mo_var = MQTTDriver_last_mo_var;
 
 public MQTTDriver initMQTTDriver_last_mo_var(int MQTTDriver_last_mo_var) {
 this.MQTTDriver_last_mo_var = MQTTDriver_last_mo_var;
+return this;
+}
+
+public int getMQTTDriver_id_s_var() {
+return MQTTDriver_id_s_var;
+}
+
+public void setMQTTDriver_id_s_var(int MQTTDriver_id_s_var) {
+this.MQTTDriver_id_s_var = MQTTDriver_id_s_var;
+}
+
+public MQTTDriver initMQTTDriver_id_s_var(int MQTTDriver_id_s_var) {
+this.MQTTDriver_id_s_var = MQTTDriver_id_s_var;
+return this;
+}
+
+public int[] getMQTTDriver_thermometers_var() {
+return MQTTDriver_thermometers_var;
+}
+
+public void setMQTTDriver_thermometers_var(int[] MQTTDriver_thermometers_var) {
+this.MQTTDriver_thermometers_var = MQTTDriver_thermometers_var;
+}
+
+public MQTTDriver initMQTTDriver_thermometers_var(int[] MQTTDriver_thermometers_var) {
+this.MQTTDriver_thermometers_var = MQTTDriver_thermometers_var;
+return this;
+}
+
+public int getMQTTDriver_last_onoff_var() {
+return MQTTDriver_last_onoff_var;
+}
+
+public void setMQTTDriver_last_onoff_var(int MQTTDriver_last_onoff_var) {
+this.MQTTDriver_last_onoff_var = MQTTDriver_last_onoff_var;
+}
+
+public MQTTDriver initMQTTDriver_last_onoff_var(int MQTTDriver_last_onoff_var) {
+this.MQTTDriver_last_onoff_var = MQTTDriver_last_onoff_var;
+return this;
+}
+
+public int[] getMQTTDriver_lightsensors_var() {
+return MQTTDriver_lightsensors_var;
+}
+
+public void setMQTTDriver_lightsensors_var(int[] MQTTDriver_lightsensors_var) {
+this.MQTTDriver_lightsensors_var = MQTTDriver_lightsensors_var;
+}
+
+public MQTTDriver initMQTTDriver_lightsensors_var(int[] MQTTDriver_lightsensors_var) {
+this.MQTTDriver_lightsensors_var = MQTTDriver_lightsensors_var;
+return this;
+}
+
+public int getMQTTDriver_i_var() {
+return MQTTDriver_i_var;
+}
+
+public void setMQTTDriver_i_var(int MQTTDriver_i_var) {
+this.MQTTDriver_i_var = MQTTDriver_i_var;
+}
+
+public MQTTDriver initMQTTDriver_i_var(int MQTTDriver_i_var) {
+this.MQTTDriver_i_var = MQTTDriver_i_var;
+return this;
+}
+
+public boolean getMQTTDriver_found_var() {
+return MQTTDriver_found_var;
+}
+
+public void setMQTTDriver_found_var(boolean MQTTDriver_found_var) {
+this.MQTTDriver_found_var = MQTTDriver_found_var;
+}
+
+public MQTTDriver initMQTTDriver_found_var(boolean MQTTDriver_found_var) {
+this.MQTTDriver_found_var = MQTTDriver_found_var;
+return this;
+}
+
+public int[] getMQTTDriver_onoffswitches_var() {
+return MQTTDriver_onoffswitches_var;
+}
+
+public void setMQTTDriver_onoffswitches_var(int[] MQTTDriver_onoffswitches_var) {
+this.MQTTDriver_onoffswitches_var = MQTTDriver_onoffswitches_var;
+}
+
+public MQTTDriver initMQTTDriver_onoffswitches_var(int[] MQTTDriver_onoffswitches_var) {
+this.MQTTDriver_onoffswitches_var = MQTTDriver_onoffswitches_var;
+return this;
+}
+
+public boolean getMQTTDriver_foundL_var() {
+return MQTTDriver_foundL_var;
+}
+
+public void setMQTTDriver_foundL_var(boolean MQTTDriver_foundL_var) {
+this.MQTTDriver_foundL_var = MQTTDriver_foundL_var;
+}
+
+public MQTTDriver initMQTTDriver_foundL_var(boolean MQTTDriver_foundL_var) {
+this.MQTTDriver_foundL_var = MQTTDriver_foundL_var;
 return this;
 }
 
@@ -382,11 +382,11 @@ return MQTT_port;
 }
 private CompositeState buildMQTTDriver_behaviorMQTTDriver(){
 final AtomicState state_MQTTDriver_behaviorMQTTDriver_Idle = new AtomicState("Idle");
-Transition h1761958205 = new Transition();
-h1761958205.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h1761958205.event(temperatureType);
-h1761958205.port(MQTT_port);
-h1761958205.action((Event e)->{
+Transition h172450074 = new Transition();
+h172450074.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h172450074.event(temperatureType);
+h172450074.port(MQTT_port);
+h172450074.action((Event e)->{
 final TemperatureMessageType.TemperatureMessage temperature = (TemperatureMessageType.TemperatureMessage) e;
 MQTTDriver_id_s_var = (int) (temperature.id);
 MQTTDriver_i_var = (int) (0);
@@ -406,11 +406,11 @@ sendTemperature_via_provide_temp((int) (getMQTTDriver_id_s_var()), (String) (MQT
 }
 });
 
-Transition h897680199 = new Transition();
-h897680199.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h897680199.event(add_thermometerType);
-h897680199.port(require_val_port);
-h897680199.action((Event e)->{
+Transition h1712087185 = new Transition();
+h1712087185.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h1712087185.event(add_thermometerType);
+h1712087185.port(require_val_port);
+h1712087185.action((Event e)->{
 final Add_thermometerMessageType.Add_thermometerMessage add_thermometer = (Add_thermometerMessageType.Add_thermometerMessage) e;
 MQTTDriver_id_s_var = (int) (add_thermometer.id);
 MQTTDriver_thermometers_var[(int)(getMQTTDriver_last_thermo_var())] = (int) (getMQTTDriver_id_s_var());
@@ -419,11 +419,11 @@ MQTTDriver_thermoval_var[(int)(getMQTTDriver_last_thermo_var())] = (double) (20)
 MQTTDriver_last_thermo_var = (int) (getMQTTDriver_last_thermo_var() + 1);
 });
 
-Transition h1408119605 = new Transition();
-h1408119605.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h1408119605.event(add_lightsensorType);
-h1408119605.port(require_val_port);
-h1408119605.action((Event e)->{
+Transition h105716729 = new Transition();
+h105716729.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h105716729.event(add_lightsensorType);
+h105716729.port(require_val_port);
+h105716729.action((Event e)->{
 final Add_lightsensorMessageType.Add_lightsensorMessage add_lightsensor = (Add_lightsensorMessageType.Add_lightsensorMessage) e;
 MQTTDriver_id_s_var = (int) (add_lightsensor.id);
 MQTTDriver_lightsensors_var[(int)(getMQTTDriver_last_light_var())] = (int) (getMQTTDriver_id_s_var());
@@ -431,11 +431,11 @@ MQTTDriver_lightval_var[(int)(getMQTTDriver_last_light_var())] = (double) (50);
 MQTTDriver_last_light_var = (int) (getMQTTDriver_last_light_var() + 1);
 });
 
-Transition h794243319 = new Transition();
-h794243319.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h794243319.event(luminanceType);
-h794243319.port(MQTT_port);
-h794243319.action((Event e)->{
+Transition h1534884314 = new Transition();
+h1534884314.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h1534884314.event(luminanceType);
+h1534884314.port(MQTT_port);
+h1534884314.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 MQTTDriver_id_s_var = (int) (luminance.id);
 MQTTDriver_i_var = (int) (0);
@@ -455,22 +455,22 @@ sendLuminance_via_provide_lum_motion((int) (getMQTTDriver_id_s_var()), (double) 
 }
 });
 
-Transition h1910017957 = new Transition();
-h1910017957.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h1910017957.event(add_deviceType);
-h1910017957.port(require_val_port);
-h1910017957.action((Event e)->{
+Transition h219283615 = new Transition();
+h219283615.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h219283615.event(add_deviceType);
+h219283615.port(require_val_port);
+h219283615.action((Event e)->{
 final Add_deviceMessageType.Add_deviceMessage add_device = (Add_deviceMessageType.Add_deviceMessage) e;
 MQTTDriver_did_var = (int) (add_device.did);
 MQTTDriver_onoffswitches_var[(int)(getMQTTDriver_last_onoff_var())] = (int) (getMQTTDriver_did_var());
 MQTTDriver_last_onoff_var = (int) (getMQTTDriver_last_onoff_var() + 1);
 });
 
-Transition h356254764 = new Transition();
-h356254764.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h356254764.event(SwitchOnType);
-h356254764.port(require_val_port);
-h356254764.action((Event e)->{
+Transition h1339500503 = new Transition();
+h1339500503.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h1339500503.event(SwitchOnType);
+h1339500503.port(require_val_port);
+h1339500503.action((Event e)->{
 final SwitchOnMessageType.SwitchOnMessage SwitchOn = (SwitchOnMessageType.SwitchOnMessage) e;
 MQTTDriver_did_var = (int) (SwitchOn.did);
 MQTTDriver_i_var = (int) (0);
@@ -489,11 +489,11 @@ sendSwitchOn_via_MQTT((int) (getMQTTDriver_did_var()));
 }
 });
 
-Transition h1570727443 = new Transition();
-h1570727443.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
-h1570727443.event(SwitchOffType);
-h1570727443.port(require_val_port);
-h1570727443.action((Event e)->{
+Transition h599524668 = new Transition();
+h599524668.from(state_MQTTDriver_behaviorMQTTDriver_Idle).to(state_MQTTDriver_behaviorMQTTDriver_Idle);
+h599524668.event(SwitchOffType);
+h599524668.port(require_val_port);
+h599524668.action((Event e)->{
 final SwitchOffMessageType.SwitchOffMessage SwitchOff = (SwitchOffMessageType.SwitchOffMessage) e;
 MQTTDriver_did_var = (int) (SwitchOff.did);
 MQTTDriver_i_var = (int) (0);

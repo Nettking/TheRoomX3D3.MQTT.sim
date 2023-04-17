@@ -232,9 +232,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 					action do
 						if (current_temp > temp.t) request_actuator!SwitchOn(switch_id)
 						current_temp = temp.t
-						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-						println (current_average_diff)
 						temp_buffer[buffer_rear] = temp.t
+						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+						println (current_average_diff)
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if (buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
@@ -246,9 +246,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 					action do
 						request_actuator!SwitchOff(switch_id)
 						current_temp = temp2.t
-						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-						println (current_average_diff)
 						temp_buffer[buffer_rear] = temp2.t
+						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+						println (current_average_diff)
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if (buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
@@ -279,9 +279,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 					action do
 						if (current_temp < temp.t) request_actuator!SwitchOff(switch_id)
 						current_temp = temp.t
-						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-						println (current_average_diff)
 						temp_buffer[buffer_rear] = temp.t
+						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+						println (current_average_diff)
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if (buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
@@ -293,9 +293,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 					action do
 						request_actuator!SwitchOn(switch_id)
 						current_temp = temp2.t
-						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-						println (current_average_diff)
 						temp_buffer[buffer_rear] = temp2.t
+						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+						println (current_average_diff)
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if (buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
@@ -354,9 +354,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 				transition -> On
 				event temp : get_sensor?temperature
 				action do
-					current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-					println (current_average_diff)
 					temp_buffer[buffer_rear] = temp.t
+					current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+					println (current_average_diff)
 					buffer_rear = (buffer_rear + 1) % buffer_size
 					if (buffer_rear == buffer_front) do
 						buffer_front = (buffer_front + 1) % buffer_size
@@ -382,9 +382,9 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 				transition -> Off
 				event temp : get_sensor?temperature
 				action do
-					current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / buffer_size
-					println (current_average_diff)
 					temp_buffer[buffer_rear] = temp.t
+					current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
+					println (current_average_diff)
 					buffer_rear = (buffer_rear + 1) % buffer_size
 					if (buffer_rear == buffer_front) do
 						buffer_front = (buffer_front + 1) % buffer_size

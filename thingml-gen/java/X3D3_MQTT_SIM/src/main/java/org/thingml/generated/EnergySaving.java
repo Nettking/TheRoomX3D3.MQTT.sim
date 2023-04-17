@@ -88,13 +88,13 @@ request_luminance_sensor_port.send(add_lightsensorType.instantiate(LuminanceMsg_
 }
 
 //Attributes
-private double EnergySaving_current_comfort_temp_var;
-private double EnergySaving_night_temp_fall_var;
 private long TimeStuff_night_start_var;
 private double EnergySaving_current_luminance_var;
-private long TimeStuff_night_end_var;
-private double EnergySaving_light_threshold_var;
 private double EnergySaving_light_off_temp_fall_var;
+private double EnergySaving_current_comfort_temp_var;
+private double EnergySaving_light_threshold_var;
+private double EnergySaving_night_temp_fall_var;
+private long TimeStuff_night_end_var;
 //Ports
 private Port get_luminance_port;
 private Port human_input_temp_port;
@@ -122,32 +122,6 @@ super();
 }
 
 //Getters and Setters for non readonly/final attributes
-public double getEnergySaving_current_comfort_temp_var() {
-return EnergySaving_current_comfort_temp_var;
-}
-
-public void setEnergySaving_current_comfort_temp_var(double EnergySaving_current_comfort_temp_var) {
-this.EnergySaving_current_comfort_temp_var = EnergySaving_current_comfort_temp_var;
-}
-
-public EnergySaving initEnergySaving_current_comfort_temp_var(double EnergySaving_current_comfort_temp_var) {
-this.EnergySaving_current_comfort_temp_var = EnergySaving_current_comfort_temp_var;
-return this;
-}
-
-public double getEnergySaving_night_temp_fall_var() {
-return EnergySaving_night_temp_fall_var;
-}
-
-public void setEnergySaving_night_temp_fall_var(double EnergySaving_night_temp_fall_var) {
-this.EnergySaving_night_temp_fall_var = EnergySaving_night_temp_fall_var;
-}
-
-public EnergySaving initEnergySaving_night_temp_fall_var(double EnergySaving_night_temp_fall_var) {
-this.EnergySaving_night_temp_fall_var = EnergySaving_night_temp_fall_var;
-return this;
-}
-
 public long getTimeStuff_night_start_var() {
 return TimeStuff_night_start_var;
 }
@@ -174,16 +148,29 @@ this.EnergySaving_current_luminance_var = EnergySaving_current_luminance_var;
 return this;
 }
 
-public long getTimeStuff_night_end_var() {
-return TimeStuff_night_end_var;
+public double getEnergySaving_light_off_temp_fall_var() {
+return EnergySaving_light_off_temp_fall_var;
 }
 
-public void setTimeStuff_night_end_var(long TimeStuff_night_end_var) {
-this.TimeStuff_night_end_var = TimeStuff_night_end_var;
+public void setEnergySaving_light_off_temp_fall_var(double EnergySaving_light_off_temp_fall_var) {
+this.EnergySaving_light_off_temp_fall_var = EnergySaving_light_off_temp_fall_var;
 }
 
-public EnergySaving initTimeStuff_night_end_var(long TimeStuff_night_end_var) {
-this.TimeStuff_night_end_var = TimeStuff_night_end_var;
+public EnergySaving initEnergySaving_light_off_temp_fall_var(double EnergySaving_light_off_temp_fall_var) {
+this.EnergySaving_light_off_temp_fall_var = EnergySaving_light_off_temp_fall_var;
+return this;
+}
+
+public double getEnergySaving_current_comfort_temp_var() {
+return EnergySaving_current_comfort_temp_var;
+}
+
+public void setEnergySaving_current_comfort_temp_var(double EnergySaving_current_comfort_temp_var) {
+this.EnergySaving_current_comfort_temp_var = EnergySaving_current_comfort_temp_var;
+}
+
+public EnergySaving initEnergySaving_current_comfort_temp_var(double EnergySaving_current_comfort_temp_var) {
+this.EnergySaving_current_comfort_temp_var = EnergySaving_current_comfort_temp_var;
 return this;
 }
 
@@ -200,16 +187,29 @@ this.EnergySaving_light_threshold_var = EnergySaving_light_threshold_var;
 return this;
 }
 
-public double getEnergySaving_light_off_temp_fall_var() {
-return EnergySaving_light_off_temp_fall_var;
+public double getEnergySaving_night_temp_fall_var() {
+return EnergySaving_night_temp_fall_var;
 }
 
-public void setEnergySaving_light_off_temp_fall_var(double EnergySaving_light_off_temp_fall_var) {
-this.EnergySaving_light_off_temp_fall_var = EnergySaving_light_off_temp_fall_var;
+public void setEnergySaving_night_temp_fall_var(double EnergySaving_night_temp_fall_var) {
+this.EnergySaving_night_temp_fall_var = EnergySaving_night_temp_fall_var;
 }
 
-public EnergySaving initEnergySaving_light_off_temp_fall_var(double EnergySaving_light_off_temp_fall_var) {
-this.EnergySaving_light_off_temp_fall_var = EnergySaving_light_off_temp_fall_var;
+public EnergySaving initEnergySaving_night_temp_fall_var(double EnergySaving_night_temp_fall_var) {
+this.EnergySaving_night_temp_fall_var = EnergySaving_night_temp_fall_var;
+return this;
+}
+
+public long getTimeStuff_night_end_var() {
+return TimeStuff_night_end_var;
+}
+
+public void setTimeStuff_night_end_var(long TimeStuff_night_end_var) {
+this.TimeStuff_night_end_var = TimeStuff_night_end_var;
+}
+
+public EnergySaving initTimeStuff_night_end_var(long TimeStuff_night_end_var) {
+this.TimeStuff_night_end_var = TimeStuff_night_end_var;
 return this;
 }
 
@@ -256,259 +256,259 @@ state_EnergySaving_EnergySaving_Night.onExit(()->{
 sendTimer_cancel_via_energy_timer();
 });
 
-Transition h1897440617 = new Transition();
-h1897440617.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
-h1897440617.event(set_temperatureType);
-h1897440617.port(human_input_temp_port);
-h1897440617.action((Event e)->{
+Transition h878796532 = new Transition();
+h878796532.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
+h878796532.event(set_temperatureType);
+h878796532.port(human_input_temp_port);
+h878796532.action((Event e)->{
 final Set_temperatureMessageType.Set_temperatureMessage set_temperature = (Set_temperatureMessageType.Set_temperatureMessage) e;
 EnergySaving_current_comfort_temp_var = (double) (set_temperature.t);
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var()));
 });
 
-Transition h2053647705 = new Transition();
-h2053647705.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_LightOff);
-h2053647705.event(luminanceType);
-h2053647705.guard((Event e)->{
+Transition h627185334 = new Transition();
+h627185334.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_LightOff);
+h627185334.event(luminanceType);
+h627185334.guard((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 return luminance.lum < getEnergySaving_light_threshold_var() && (Night((long) (Now())) == false);
 });
 
-h2053647705.port(get_luminance_port);
-h2053647705.action((Event e)->{
+h627185334.port(get_luminance_port);
+h627185334.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 EnergySaving_current_luminance_var = (double) (luminance.lum);
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h1919050214 = new Transition();
-h1919050214.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Night);
-h1919050214.event(luminanceType);
-h1919050214.guard((Event e)->{
+Transition h1582048929 = new Transition();
+h1582048929.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Night);
+h1582048929.event(luminanceType);
+h1582048929.guard((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 return luminance.lum < getEnergySaving_light_threshold_var() && (Night((long) (Now())) == true);
 });
 
-h1919050214.port(get_luminance_port);
-h1919050214.action((Event e)->{
+h1582048929.port(get_luminance_port);
+h1582048929.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 EnergySaving_current_luminance_var = (double) (luminance.lum);
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_night_temp_fall_var()));
 });
 
-Transition h1162516884 = new Transition();
-h1162516884.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_LightOff);
-h1162516884.event(set_night_startType);
-h1162516884.guard((Event e)->{
+Transition h149233400 = new Transition();
+h149233400.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_LightOff);
+h149233400.event(set_night_startType);
+h149233400.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == false);
 });
 
-h1162516884.port(get_day_night_time_port);
-h1162516884.action((Event e)->{
+h149233400.port(get_day_night_time_port);
+h149233400.action((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h1119485744 = new Transition();
-h1119485744.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Night);
-h1119485744.event(set_night_startType);
-h1119485744.guard((Event e)->{
+Transition h327089356 = new Transition();
+h327089356.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Night);
+h327089356.event(set_night_startType);
+h327089356.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == true);
 });
 
-h1119485744.port(get_day_night_time_port);
-h1119485744.action((Event e)->{
+h327089356.port(get_day_night_time_port);
+h327089356.action((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_night_temp_fall_var()));
 });
 
-Transition h2031248732 = new Transition();
-h2031248732.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
-h2031248732.event(set_day_startType);
-h2031248732.guard((Event e)->{
+Transition h364384479 = new Transition();
+h364384479.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
+h364384479.event(set_day_startType);
+h364384479.guard((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 return getEnergySaving_current_luminance_var() >= getEnergySaving_light_threshold_var();
 });
 
-h2031248732.port(get_day_night_time_port);
-h2031248732.action((Event e)->{
+h364384479.port(get_day_night_time_port);
+h364384479.action((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 TimeStuff_night_end_var = (long) (set_day_start.time);
 });
 
-Transition h1329124084 = new Transition();
-h1329124084.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
-h1329124084.event(set_night_startType);
-h1329124084.guard((Event e)->{
+Transition h410969626 = new Transition();
+h410969626.from(state_EnergySaving_EnergySaving_Normal).to(state_EnergySaving_EnergySaving_Normal);
+h410969626.event(set_night_startType);
+h410969626.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() >= getEnergySaving_light_threshold_var();
 });
 
-h1329124084.port(get_day_night_time_port);
-h1329124084.action((Event e)->{
+h410969626.port(get_day_night_time_port);
+h410969626.action((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 TimeStuff_night_start_var = (long) (set_night_start.time);
 });
 
-Transition h1185573319 = new Transition();
-h1185573319.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
-h1185573319.event(timer_timeoutType);
-h1185573319.port(energy_timer_port);
-h1185573319.action((Event e)->{
+Transition h1752831671 = new Transition();
+h1752831671.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
+h1752831671.event(timer_timeoutType);
+h1752831671.port(energy_timer_port);
+h1752831671.action((Event e)->{
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_night_temp_fall_var()));
 });
 
-Transition h1958797264 = new Transition();
-h1958797264.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Normal);
-h1958797264.event(luminanceType);
-h1958797264.guard((Event e)->{
+Transition h844549466 = new Transition();
+h844549466.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Normal);
+h844549466.event(luminanceType);
+h844549466.guard((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 return luminance.lum >= getEnergySaving_light_threshold_var();
 });
 
-h1958797264.port(get_luminance_port);
-h1958797264.action((Event e)->{
+h844549466.port(get_luminance_port);
+h844549466.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 EnergySaving_current_luminance_var = (double) (luminance.lum);
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var()));
 });
 
-Transition h854201366 = new Transition();
-h854201366.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
-h854201366.event(set_temperatureType);
-h854201366.port(human_input_temp_port);
-h854201366.action((Event e)->{
+Transition h1835936469 = new Transition();
+h1835936469.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
+h1835936469.event(set_temperatureType);
+h1835936469.port(human_input_temp_port);
+h1835936469.action((Event e)->{
 final Set_temperatureMessageType.Set_temperatureMessage set_temperature = (Set_temperatureMessageType.Set_temperatureMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (set_temperature.t - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h1257728172 = new Transition();
-h1257728172.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
-h1257728172.event(set_night_startType);
-h1257728172.guard((Event e)->{
+Transition h492773285 = new Transition();
+h492773285.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
+h492773285.event(set_night_startType);
+h492773285.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == true) && getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var();
 });
 
-h1257728172.port(get_day_night_time_port);
-h1257728172.action((Event e)->{
+h492773285.port(get_day_night_time_port);
+h492773285.action((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_night_temp_fall_var()));
 });
 
-Transition h134436238 = new Transition();
-h134436238.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
-h134436238.event(set_day_startType);
-h134436238.guard((Event e)->{
+Transition h1695408090 = new Transition();
+h1695408090.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_Night);
+h1695408090.event(set_day_startType);
+h1695408090.guard((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightEnd((long) (Now()), (long) (set_day_start.time)) == true);
 });
 
-h134436238.port(get_day_night_time_port);
-h134436238.action((Event e)->{
+h1695408090.port(get_day_night_time_port);
+h1695408090.action((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h1240904738 = new Transition();
-h1240904738.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
-h1240904738.event(set_night_startType);
-h1240904738.guard((Event e)->{
+Transition h1239189570 = new Transition();
+h1239189570.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
+h1239189570.event(set_night_startType);
+h1239189570.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == false);
 });
 
-h1240904738.port(get_day_night_time_port);
-Transition h471789367 = new Transition();
-h471789367.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
-h471789367.event(set_day_startType);
-h471789367.guard((Event e)->{
+h1239189570.port(get_day_night_time_port);
+Transition h485423874 = new Transition();
+h485423874.from(state_EnergySaving_EnergySaving_LightOff).to(state_EnergySaving_EnergySaving_LightOff);
+h485423874.event(set_day_startType);
+h485423874.guard((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightEnd((long) (Now()), (long) (set_day_start.time)) == false);
 });
 
-h471789367.port(get_day_night_time_port);
-Transition h945959976 = new Transition();
-h945959976.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
-h945959976.event(timer_timeoutType);
-h945959976.port(energy_timer_port);
-h945959976.action((Event e)->{
+h485423874.port(get_day_night_time_port);
+Transition h1890108014 = new Transition();
+h1890108014.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
+h1890108014.event(timer_timeoutType);
+h1890108014.port(energy_timer_port);
+h1890108014.action((Event e)->{
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h262023922 = new Transition();
-h262023922.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Normal);
-h262023922.event(luminanceType);
-h262023922.guard((Event e)->{
+Transition h1429213609 = new Transition();
+h1429213609.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Normal);
+h1429213609.event(luminanceType);
+h1429213609.guard((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 return luminance.lum >= getEnergySaving_light_threshold_var();
 });
 
-h262023922.port(get_luminance_port);
-h262023922.action((Event e)->{
+h1429213609.port(get_luminance_port);
+h1429213609.action((Event e)->{
 final LuminanceMessageType.LuminanceMessage luminance = (LuminanceMessageType.LuminanceMessage) e;
 EnergySaving_current_luminance_var = (double) (luminance.lum);
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var()));
 });
 
-Transition h2075558183 = new Transition();
-h2075558183.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
-h2075558183.event(set_temperatureType);
-h2075558183.port(human_input_temp_port);
-h2075558183.action((Event e)->{
+Transition h1874718325 = new Transition();
+h1874718325.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
+h1874718325.event(set_temperatureType);
+h1874718325.port(human_input_temp_port);
+h1874718325.action((Event e)->{
 final Set_temperatureMessageType.Set_temperatureMessage set_temperature = (Set_temperatureMessageType.Set_temperatureMessage) e;
 EnergySaving_current_comfort_temp_var = (double) (set_temperature.t - getEnergySaving_night_temp_fall_var());
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var()));
 });
 
-Transition h1362347642 = new Transition();
-h1362347642.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
-h1362347642.event(set_night_startType);
-h1362347642.guard((Event e)->{
+Transition h1859755232 = new Transition();
+h1859755232.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
+h1859755232.event(set_night_startType);
+h1859755232.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == false);
 });
 
-h1362347642.port(get_day_night_time_port);
-h1362347642.action((Event e)->{
+h1859755232.port(get_day_night_time_port);
+h1859755232.action((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h1484996570 = new Transition();
-h1484996570.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
-h1484996570.event(set_day_startType);
-h1484996570.guard((Event e)->{
+Transition h1599779245 = new Transition();
+h1599779245.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_LightOff);
+h1599779245.event(set_day_startType);
+h1599779245.guard((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightEnd((long) (Now()), (long) (set_day_start.time)) == false);
 });
 
-h1484996570.port(get_day_night_time_port);
-h1484996570.action((Event e)->{
+h1599779245.port(get_day_night_time_port);
+h1599779245.action((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 sendSet_temperature_via_send_comfort_temp((double) (getEnergySaving_current_comfort_temp_var() - getEnergySaving_light_off_temp_fall_var()));
 });
 
-Transition h2063290683 = new Transition();
-h2063290683.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
-h2063290683.event(set_night_startType);
-h2063290683.guard((Event e)->{
+Transition h1711234567 = new Transition();
+h1711234567.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
+h1711234567.event(set_night_startType);
+h1711234567.guard((Event e)->{
 final Set_night_startMessageType.Set_night_startMessage set_night_start = (Set_night_startMessageType.Set_night_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightStart((long) (Now()), (long) (set_night_start.time)) == true);
 });
 
-h2063290683.port(get_day_night_time_port);
-Transition h1265091827 = new Transition();
-h1265091827.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
-h1265091827.event(set_day_startType);
-h1265091827.guard((Event e)->{
+h1711234567.port(get_day_night_time_port);
+Transition h759666442 = new Transition();
+h759666442.from(state_EnergySaving_EnergySaving_Night).to(state_EnergySaving_EnergySaving_Night);
+h759666442.event(set_day_startType);
+h759666442.guard((Event e)->{
 final Set_day_startMessageType.Set_day_startMessage set_day_start = (Set_day_startMessageType.Set_day_startMessage) e;
 return getEnergySaving_current_luminance_var() < getEnergySaving_light_threshold_var() && (UpdateNightEnd((long) (Now()), (long) (set_day_start.time)) == true);
 });
 
-h1265091827.port(get_day_night_time_port);
+h759666442.port(get_day_night_time_port);
 final CompositeState state_EnergySaving_EnergySaving = new CompositeState("EnergySaving");
 state_EnergySaving_EnergySaving.onEntry(()->{
 sendAdd_lightsensor_via_request_luminance_sensor((int) (1));

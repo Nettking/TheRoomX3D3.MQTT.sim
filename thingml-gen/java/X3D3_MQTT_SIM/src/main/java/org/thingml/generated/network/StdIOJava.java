@@ -14,11 +14,11 @@ public class StdIOJava extends Component {
 	final PrintStream stdout = System.out;
 
 	/*$PORTS$*/
-private Port TTYin_lum_mot_port;
-public Port getTTYin_lum_mot_port(){return TTYin_lum_mot_port;}
-
 private Port TTYin_temp_port;
 public Port getTTYin_temp_port(){return TTYin_temp_port;}
+
+private Port TTYin_lum_mot_port;
+public Port getTTYin_lum_mot_port(){return TTYin_lum_mot_port;}
 
 private Port get_values_port;
 public Port getGet_values_port(){return get_values_port;}
@@ -27,8 +27,8 @@ public Port getGet_values_port(){return get_values_port;}
 	private void parse(final String payload) {
         final Event event = formatter.instantiate(payload);
 if (event != null) get_values_port.send(event);
-if (event != null) TTYin_temp_port.send(event);
 if (event != null) TTYin_lum_mot_port.send(event);
+if (event != null) TTYin_temp_port.send(event);
 
 	}
 
@@ -56,9 +56,9 @@ if (event != null) TTYin_lum_mot_port.send(event);
 	@Override
 	public Component buildBehavior(String id, Component root) {
         /*$INIT PORTS$*/
-TTYin_lum_mot_port = new Port("TTYin_lum_mot", this);
-
 TTYin_temp_port = new Port("TTYin_temp", this);
+
+TTYin_lum_mot_port = new Port("TTYin_lum_mot", this);
 
 get_values_port = new Port("get_values", this);
 
