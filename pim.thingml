@@ -48,11 +48,15 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 	property current_temp:Double = 0 // the last temperature recorded, buffering one measurement
 	property current_average_diff:Double = 0
 	property warming_time:Double = 10
-	property cooling_time:Double = 10
+	property Cooling_time:Double = 10
 	property buffer_size:Integer = 10
 	property temp_buffer:Double[10]
 	property buffer_rear:Integer = 0
 	property buffer_front:Integer = 0
+
+	
+		
+
 	
 	statechart PIM_behavior init Build {
 		on entry do
@@ -226,7 +230,7 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 				
 					transition-> TemprDecrease
 					event temp:get_sensor?temperature
-					guard temp.t+current_average_diff*cooling_time>=tmrature+delta
+					guard temp.t+current_average_diff*Cooling_time>=tmrature+delta
 					action do
 						// TRACING to follow thermostat print("TempDecrease: Observed=") print(temp.t) print(" Desired ") print(tmrature) print("\n") 
 						if (current_temp<temp.t) request_actuator!SwitchOff(switch_id)
@@ -244,7 +248,7 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 					
 					transition -> TemprIncrease
 					event temp2:get_sensor?temperature
-					guard temp2.t+current_average_diff*cooling_time<tmrature-delta
+					guard temp2.t+current_average_diff*Cooling_time<tmrature-delta
 					action do
 						request_actuator!SwitchOn(switch_id)
 						current_temp = temp2.t
@@ -407,4 +411,120 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 		} // end Running
 	} // end PIM_behavior
 } // end PIM thing
+
+
+
+thing FireProtect includes GeneralMsg, OnOffMsg, TimerMsgs {
+
+	property switch_id:Integer = 1 
+	property max_duration:Long = 60*60*1000
+	property off_duration:Long = 60*10*1000 
+	property on_when_cooled_down:Boolean = true 
+
+	provided port get_stuff {
+		receives SwitchOn, SwitchOff, add_device
+	}
+	required port put_stuff {
+		sends SwitchOn, SwitchOff, add_device
+	}
+	
+	required port guard_timr
+    {
+		receives timer_timeout
+		sends timer_start, timer_cancel
+	}
+	required port human_output {
+		sends prompt
+	}
+	
+
+	statechart FireProtect_behavior init Init {
+		state Init { 
+			internal event add_device:get_stuff?add_device
+			action do
+				put_stuff!add_device(add_device.did)
+			end
+			transition -> ON
+			event turnon:get_stuff?SwitchOn
+			action do
+				put_stuff!SwitchOn(turnon.did)
+				on_when_cooled_down = true
+			end
+			
+			transition -> OFF
+			event turn_off:get_stuff?SwitchOff
+			action do
+				put_stuff!SwitchOff(turn_off.did)
+				on_when_cooled_down = false
+			end
+		}
+		state ON { 
+			on entry do
+			guard_timr!timer_start(max_duration)
+			on_when_cooled_down = true
+		end
+		on exit guard_timr!timer_cancel()
+			internal event turnon:get_stuff?SwitchOn
+			action do
+				put_stuff!SwitchOn(turnon.did)
+				on_when_cooled_down = true
+			end
+			transition -> Cooling 
+			event turn_off:get_stuff?SwitchOff
+			action do
+				put_stuff!SwitchOff(turn_off.did)
+				on_when_cooled_down = false
+			end
+			transition -> Cooling
+			event timout:guard_timr?timer_timeout
+			action do
+				put_stuff!SwitchOff(switch_id)
+				human_output!prompt("FireProtection: Turning off the heater for Cooling_time")
+				on_when_cooled_down = true
+			end
+			internal event get_stuff?add_device
+			action human_output!prompt("Internal ERROR in FireProtection: unexpected add_device ON")
+		}
+		state Cooling { 
+		on entry guard_timr!timer_start(off_duration)
+		on exit guard_timr!timer_cancel()
+			internal event get_stuff?SwitchOn
+			action do
+				on_when_cooled_down = true
+			end
+			
+			internal event get_stuff?SwitchOff
+			action do
+				on_when_cooled_down = false
+			end
+			
+			transition -> ON
+			event guard_timr?timer_timeout
+			guard on_when_cooled_down
+			action do
+				human_output!prompt("FireProtection: Heater set to ON")
+				put_stuff!SwitchOn(switch_id)
+			end
+			transition -> OFF
+			event guard_timr?timer_timeout
+			guard not on_when_cooled_down
+			action do
+				human_output!prompt("FireProtection: Heater enabled, set to OFF")
+			end
+			internal event get_stuff?add_device
+			action human_output!prompt("Interal ERROR in FireProtection: add_device at improper place Cooling")
+		}
+		state OFF { 
+			transition -> ON
+			event turnon:get_stuff?SwitchOn
+			action put_stuff!SwitchOn(turnon.did)
+			internal event turn_off:get_stuff?SwitchOff
+			action put_stuff!SwitchOff(turn_off.did)
+			internal event get_stuff?add_device
+			action human_output!prompt("Internal ERROR in FireProtection: add_device at improper place OFF")
+		}
+
+	} 
+
+} 
 
