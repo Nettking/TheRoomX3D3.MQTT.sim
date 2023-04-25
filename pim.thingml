@@ -546,9 +546,9 @@ thing FreezeProtect includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs {
 	property freeze_critical_temp:Double = 6 
 	properly delta: Integer = 5
 	
-	statechart FreezeProtect_behavior init Monitoring {
-		composite state Monitoring init ObserveTemp keeps history {
-			state ObserveTemp {
+	statechart FreezeProtect_behavior init Init {
+		composite state Init init observe_temp keeps history {
+			state observe_temp {
 				transition -> FreezeWarning
 				event tmp:get_temp?temperature
 				guard tmp.t<freeze_warning_temp
@@ -556,13 +556,13 @@ thing FreezeProtect includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs {
 					put_act!SwitchOn(switch_id) 
 					human_output!prompt("Freeze WARNING: Temperature is now below warning level:" + tmp.t)
 				end
-				transition -> ObserveTemp
+				transition -> observe_temp
 				event tmp:get_temp?temperature
 				guard tmp.t>=freeze_warning_temp
 
 			}
 			state FreezeWarning {
-				transition -> ObserveTemp
+				transition -> observe_temp
 				event tmp:get_temp?temperature
 				guard tmp.t>freeze_warning_temp+delta  
 				action do
@@ -604,7 +604,7 @@ thing FreezeProtect includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs {
 					human_output!prompt("Freeze WARNING: Temperature rising, still low: "+tmp.t)
 					lasttemp=tmp.t
 				end
-				transition -> ObserveTemp
+				transition -> observe_temp
 				event tmp:get_temp?temperature
 				guard tmp.t>= freeze_warning_temp
 				action
