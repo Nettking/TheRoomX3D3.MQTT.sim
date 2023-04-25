@@ -435,8 +435,7 @@ thing FireProtect includes GeneralMsg, OnOffMsg, TimerMsgs {
 	}
 	required port human_output {
 		sends prompt
-	}
-	
+	}	
 
 	statechart FireProtect_behavior init Init {
 		state Init { 
@@ -485,6 +484,7 @@ thing FireProtect includes GeneralMsg, OnOffMsg, TimerMsgs {
 			internal event get_stuff?add_device
 			action human_output!prompt("Internal ERROR in FireProtection: unexpected add_device ON")
 		}
+
 		state Cooling { 
 		on entry guard_timr!timer_start(off_duration)
 		on exit guard_timr!timer_cancel()
@@ -528,3 +528,88 @@ thing FireProtect includes GeneralMsg, OnOffMsg, TimerMsgs {
 
 } 
 
+thing FreezeProtect includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs {
+
+	provided port get_temp {
+		receives temperature
+	}
+	required port put_act {
+		sends SwitchOn, SwitchOff
+	}
+	required port human_output {
+		sends temperature, prompt
+	}
+
+	property switch_id:Integer = 1 
+	property lasttemp: Double 
+	property freeze_warning_temp:Double = 9 
+	property freeze_critical_temp:Double = 6 
+	properly delta: Integer = 5
+	
+	statechart FreezeProtect_behavior init Monitoring {
+		composite state Monitoring init ObserveTemp keeps history {
+			state ObserveTemp {
+				transition -> FreezeWarning
+				event tmp:get_temp?temperature
+				guard tmp.t<freeze_warning_temp
+				action do
+					put_act!SwitchOn(switch_id) 
+					human_output!prompt("Freeze WARNING: Temperature is now below warning level:" + tmp.t)
+				end
+				transition -> ObserveTemp
+				event tmp:get_temp?temperature
+				guard tmp.t>=freeze_warning_temp
+
+			}
+			state FreezeWarning {
+				transition -> ObserveTemp
+				event tmp:get_temp?temperature
+				guard tmp.t>freeze_warning_temp+delta  
+				action do
+					human_output!prompt("Freeze WARNING: Temperature is now above warning level: "+tmp.t)
+				end
+				transition -> FreezeWarning
+				event tmp:get_temp?temperature
+				guard tmp.t>freeze_critical_temp
+				transition -> FreezeEmergency
+				event tmp:get_temp?temperature
+				guard tmp.t<=freeze_critical_temp
+				action do
+					put_act!SwitchOn(switch_id)
+					human_output!prompt("Freeze EMERGENCY: Very low temperature: "+tmp.t)
+					lasttemp = tmp.t
+				end
+			}
+			state FreezeEmergency {
+				transition -> FreezeEmergency
+				event tmp:get_temp?temperature
+				guard tmp.t < freeze_critical_temp
+				action do
+					if (lasttemp>tmp.t)
+					do 
+						human_output!prompt("Freeze EMERGENCY: Temperature falling: "+tmp.t)
+					end
+					else
+					do
+						human_output!prompt("Freeze EMERGENCY: Temperature critical: "+tmp.t)
+					end
+					put_act!SwitchOn(switch_id)
+					lasttemp=tmp.t
+				end
+				transition -> FreezeWarning
+				event tmp:get_temp?temperature
+				guard tmp.t < freeze_warning_temp and tmp.t >= freeze_critical_temp
+				action do
+					put_act!SwitchOn(switch_id)
+					human_output!prompt("Freeze WARNING: Temperature rising, still low: "+tmp.t)
+					lasttemp=tmp.t
+				end
+				transition -> ObserveTemp
+				event tmp:get_temp?temperature
+				guard tmp.t>= freeze_warning_temp
+				action
+					human_output!prompt("Freeze WARNING overcome, temperature is above warning level: "+tmp.t)
+			}
+		}
+	}
+}
