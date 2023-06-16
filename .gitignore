@@ -1,2 +1,7 @@
 
 thingml-gen/*.*
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs
+*.prefs
+src/*.*
+target/*.*
+
