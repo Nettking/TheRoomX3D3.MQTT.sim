@@ -4,4 +4,4 @@ thingml-gen/*.*
 *.prefs
 src/*.*
 target/*.*
-.metadata
+.metadata\*.*
