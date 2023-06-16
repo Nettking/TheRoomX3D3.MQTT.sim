@@ -10,7 +10,6 @@ protocol stdio
 
 // A Mock only needs the port definition and a Swing component will be generated
 thing Human includes TemperatureMsg, GeneralMsg, OnOffMsg, LuminanceMsg, TimeStuff, DeviceGeneral, MotionMsg
-//@mock "true"
 { 	required port send_cmd_temp {
 		sends SwitchOn, SwitchOff, set_temperature, set_delta, fetch_temp
 	}
@@ -104,7 +103,7 @@ thing Human includes TemperatureMsg, GeneralMsg, OnOffMsg, LuminanceMsg, TimeStu
 			transition -> Idle
 			event prm:TTYout?prompt
 			action do
-				println prm.txt
+				//println prm.txt
 				// get_values!prompt(prm.txt)
 			end
 		}
