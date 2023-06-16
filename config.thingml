@@ -28,7 +28,7 @@ configuration X3D3_MQTT_SIM {
 	connector myself.send_temp => e_saving.human_input_temp
 	connector myself.send_day_night_time => e_saving.get_day_night_time
 	
-	// PIM outwards 
+	//PIM outwards 
 	connector pim.request_sensor => T1.require_val
 	connector pim.request_actuator => T1.require_val
 	//connector pim.human_output => myself.get_values
