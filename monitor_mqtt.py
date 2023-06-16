@@ -4,15 +4,8 @@ import subprocess
 def on_message(client, userdata, message):
     # Decode the message payload from bytes to string
     payload = message.payload.decode()
-    if payload == str('{"SwitchOff":{"did":1}}'):
-        print('Slår av...')
-    elif payload == str('{"SwitchOn":{"did":1}}'):
-        print('Slår på...')
-    else:
-        #print('False message:', payload, "on topic:", message.topic)
-        pass
     
-    print('Received payload:', payload, "on topic:", message.topic)
+    print('Received message:', payload, "on topic:", message.topic)
 
 def establish_connection(MQTT_BROKER_ADDR, MQTT_BROKER_PORT, MQTT_TOPIC_SUB, MQTT_TOPIC_PUB, message="Hello, world!"):
 
