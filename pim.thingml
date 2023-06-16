@@ -174,7 +174,7 @@ thing PIM includes GeneralMsg, TemperatureMsg, OnOffMsg, TimerMsgs, LuminanceMsg
 						
 						temp_buffer[buffer_rear] = temp.t
 						current_average_diff = (temp_buffer[buffer_rear]-temp_buffer[buffer_front])/(buffer_size -1)
-						println(current_average_diff)
+						println(temp.t)
 						
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if(buffer_rear == buffer_front) do
