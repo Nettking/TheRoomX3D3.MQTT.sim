@@ -32,7 +32,7 @@ def establish_connection(MQTT_BROKER_ADDR, MQTT_BROKER_PORT, MQTT_TOPIC_SUB, MQT
     client.connect(MQTT_BROKER_ADDR, MQTT_BROKER_PORT)
 
     message = f'{{"temperature":{{"id":1,"txt":"temperature","t":{test_temp}}}}}'
-    message_lum = f'{{"luminance":{{"id":1,"txt":"{input_luminance}"}}}}'
+    message_lum = f'{{"luminance":{{"id":1,"lum":"{input_luminance}"}}}}'
     # Publish a message to the specified topic with the retain flag set to False and QoS level 1
     client.publish(MQTT_TOPIC_PUB, message, retain=False, qos=1)
     client.publish(MQTT_TOPIC_PUB, message_lum, retain=False, qos=1)
