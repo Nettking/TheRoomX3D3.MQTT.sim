@@ -19,8 +19,8 @@ def establish_connection(MQTT_BROKER_ADDR, MQTT_BROKER_PORT, MQTT_TOPIC_SUB, MQT
     message_lum = f'{{"luminance":{{"id":1,"txt":"SensorLuminance","lum":{input_luminance}}}}}'
 
     # Publish a message to the specified topic with the retain flag set to False and QoS level 1
-    client.publish(MQTT_TOPIC_PUB, message, retain=False, qos=1)
-    client.publish(MQTT_TOPIC_PUB, message_lum, retain=False, qos=1)
+    client.publish(MQTT_TOPIC_PUB, message)
+    client.publish(MQTT_TOPIC_PUB, message_lum)
     print("Published message: " + message)
     print("Published message: " + message_lum)
     
