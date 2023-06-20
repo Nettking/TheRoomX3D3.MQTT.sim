@@ -234,7 +234,7 @@ thing PIM includes GeneralMsg , TemperatureMsg , OnOffMsg , TimerMsgs , Luminanc
 						current_temp = temp.t
 						temp_buffer[buffer_rear] = temp.t
 						current_average_diff = (temp_buffer [buffer_rear] - temp_buffer [buffer_front]) / (buffer_size - 1)
-						println (current_average_diff)
+						println (temp.t)
 						buffer_rear = (buffer_rear + 1) % buffer_size
 						if (buffer_rear == buffer_front) do
 							buffer_front = (buffer_front + 1) % buffer_size
@@ -496,7 +496,6 @@ thing Human includes TemperatureMsg , GeneralMsg , OnOffMsg , LuminanceMsg , Tim
 			transition -> Idle
 			event prm : TTYout?prompt
 			action do
-				println prm.txt
 			end
 		}
 	}
