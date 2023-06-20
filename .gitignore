@@ -4,3 +4,8 @@ thingml-gen/*.*
 src/*.*
 target/*.*
 .metadata/*.*
+*.class
+*.java
+*.properties
+*.lst
+X3D3_MQTT_SIM_merged.thingml
